@@ -6,11 +6,12 @@ Không copy dump đề thi có bản quyền. Câu hỏi là **đề luyện t�
 
 ## Học theo thứ tự
 
-1. Đọc [nguon.md](nguon.md) — biết nên ôn ở đâu, nguồn nào đáng tin.
-2. Làm [trac-nghiem.md](trac-nghiem.md) — ~60 câu MCQ, mỗi câu có đáp án ẩn.
-3. Làm [tinh-huong.md](tinh-huong.md) — predict-the-output, deadlock, JMM.
-4. Ôn nhanh [cheatsheet.md](cheatsheet.md).
-5. Sau khi master lý thuyết: làm [bai-tap.md](bai-tap.md) rồi code trong `exercises/`.
+1. Đọc [theo-chu-de.md](theo-chu-de.md) — map topic (Oracle / LeetCode / MCQ).
+2. Đọc [nguon.md](nguon.md) — nguồn hợp pháp (không dump đề thi).
+3. Làm [oracle-theo-chu-de.md](oracle-theo-chu-de.md) + [trac-nghiem.md](trac-nghiem.md).
+4. Làm [tinh-huong.md](tinh-huong.md).
+5. Ôn [cheatsheet.md](cheatsheet.md).
+6. Code: [leetcode.md](leetcode.md) + [bai-tap.md](bai-tap.md) + `exercises/`.
 
 Chạy bài tập:
 

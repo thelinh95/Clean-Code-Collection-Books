@@ -25,6 +25,9 @@ Java 21, không cần Maven. Script tự `javac` + chạy test harness.
 | 6 | `DiningPhilosophers` | 5 nhà triết học, không deadlock | Khó |
 | 7 | `RateLimiter` | Tối đa N tác vụ đồng thời (Semaphore) | Trung bình |
 | 8 | `LazySingleton` | Lazy, thread-safe, không DCL sai | Trung bình |
+| 9 | `FooBar` … `WebCrawler` | LeetCode 1115, 1116, 1117, 1195, 1242, 1279 | LeetCode |
+
+Chi tiết đề local: [leetcode.md](leetcode.md). 1114 / 1188 / 1226 là `OrderedPrinter`, `BoundedBuffer`, `DiningPhilosophers`.
 
 ## Bài tập thêm (ngoài repo — khi làm xong 8 bài trên)
 
@@ -34,8 +37,11 @@ LeetCode (Java):
 - [1115. Print FooBar Alternately](https://leetcode.com/problems/print-foobar-alternately/)
 - [1116. Print Zero Even Odd](https://leetcode.com/problems/print-zero-even-odd/)
 - [1117. Building H2O](https://leetcode.com/problems/building-h2o/)
+- [1188. Design Bounded Blocking Queue](https://leetcode.com/problems/design-bounded-blocking-queue/)
 - [1195. Fizz Buzz Multithreaded](https://leetcode.com/problems/fizz-buzz-multithreaded/)
 - [1226. The Dining Philosophers](https://leetcode.com/problems/the-dining-philosophers/)
+- [1242. Web Crawler Multithreaded](https://leetcode.com/problems/web-crawler-multithreaded/)
+- [1279. Traffic Light Controlled Intersection](https://leetcode.com/problems/traffic-light-controlled-intersection/)
 
 Tự thiết kế:
 

@@ -1,5 +1,14 @@
 # Nên kiểm tra / ôn concurrency ở đâu?
 
+Dump đề thi Oracle / skill test Upwork **không được tải vào repo này**. “Chỉ học local” không đổi bản quyền; dump cũng thường sai và lỗi thời.
+
+Học local hợp pháp:
+
+1. Phân loại topic: [theo-chu-de.md](theo-chu-de.md)
+2. Câu Oracle-style theo objective: [oracle-theo-chu-de.md](oracle-theo-chu-de.md)
+3. 9 bài LeetCode concurrency: [leetcode.md](leetcode.md) (làm thêm trên leetcode.com)
+4. Mock trả phí: Enthuware, sách Wiley OCP
+
 ## 1. Chứng chỉ chính thức (chất lượng cao nhất)
 
 Đây là nguồn “đúng chuẩn exam”, không phải dump lậu.
