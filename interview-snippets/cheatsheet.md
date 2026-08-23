@@ -35,25 +35,6 @@ Không có: `orTimeout`, `completeOnTimeout`, `exceptionallyCompose` (Java 9/12)
 
 Default pool: `ForkJoinPool.commonPool()` — I/O thì truyền `Executor` riêng.
 
-### Exception nhiều stage (đặt đồ ăn)
-
-```
-nhận đơn → bếp nấu → shipper lấy → giao cửa → app
-```
-
-- Bếp cháy, không cứu: shipper/giao **skip**; `exceptionally`/`handle` **cuối bắt được**.
-- Bếp đổi món (`exceptionally` giữa đường): shipper chạy; app **không** còn exception.
-- `whenComplete` = quản lý ghi sổ, **không cứu**.
-- `thenApply` cuối **không** phải catch — `join()` mới ném.
-- Chi tiết + 4 case: [cf-exception.md](cf-exception.md)
-
-| API | Giống | Cứu lỗi? |
-| --- | --- | --- |
-| `thenApply` | khâu làm việc | không, skip nếu trước fail |
-| `exceptionally` | đổi món / hoàn tiền | có → giá trị mới |
-| `handle` | app luôn hiện 1 màn | có nếu return |
-| `whenComplete` | camera / log | không |
-
 ## Concurrency viết tay
 
 - `wait` phải trong `synchronized` **đúng object**, trong `while (!cond)`.

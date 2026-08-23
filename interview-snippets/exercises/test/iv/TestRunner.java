@@ -28,7 +28,6 @@ public final class TestRunner {
         check("Memoizer", TestRunner::testMemoizer);
         check("SingleflightCache", TestRunner::testSingleflight);
         check("CfPatterns", TestRunner::testCf);
-        check("CfExceptionPipeline", TestRunner::testCfEx);
         check("BoundedBuffer", TestRunner::testBuffer);
         check("TokenBucket", TestRunner::testBucket);
         check("SlidingWindowLimiter", TestRunner::testWindow);
@@ -232,43 +231,6 @@ public final class TestRunner {
         } finally {
             pool.shutdownNow();
         }
-    }
-
-    private static void testCfEx() {
-        CfExceptionPipeline.Trace happy = new CfExceptionPipeline.Trace();
-        eq("to-pho", CfExceptionPipeline.happy(happy));
-        isTrue(happy.contains("shipper:lay"), "happy shipper");
-        isTrue(!happy.contains("app:hoan-tien"), "no refund");
-
-        CfExceptionPipeline.Trace end = new CfExceptionPipeline.Trace();
-        eq("Hoan tien: bep chay pho", CfExceptionPipeline.cookFailsCaughtAtApp(end));
-        isTrue(end.contains("bep:chay-mon"), "burned");
-        isTrue(!end.contains("shipper:lay"), "skip shipper");
-        isTrue(!end.contains("giao-cua"), "skip door");
-        isTrue(end.contains("app:hoan-tien"), "app catch");
-
-        CfExceptionPipeline.Trace mid = new CfExceptionPipeline.Trace();
-        eq("com-tam (thay the)", CfExceptionPipeline.cookFailsRecoveredInKitchen(mid));
-        isTrue(mid.contains("bep:doi-mon"), "swap");
-        isTrue(mid.contains("shipper:lay"), "still ship");
-        isTrue(mid.contains("giao-cua"), "still deliver");
-        isTrue(!mid.contains("app:hoan-tien"), "end does not see error");
-
-        CfExceptionPipeline.Trace note = new CfExceptionPipeline.Trace();
-        eq("App hien loi: bep chay pho", CfExceptionPipeline.cookFailsManagerOnlyNotes(note));
-        isTrue(note.contains("quan-ly:ghi-so"), "noted");
-        isTrue(!note.contains("shipper:lay"), "still skip");
-        isTrue(note.contains("app:handle-loi"), "handle catch");
-
-        CfExceptionPipeline.Trace raw = new CfExceptionPipeline.Trace();
-        try {
-            CfExceptionPipeline.cookFailsThenApplyAtEndDoesNotCatch(raw).join();
-            throw new AssertionError("join should throw");
-        } catch (java.util.concurrent.CompletionException e) {
-            isTrue(e.getCause() instanceof IllegalStateException, "cause");
-            eq("bep chay pho", e.getCause().getMessage());
-        }
-        isTrue(!raw.contains("shipper:lay"), "thenApply end skipped");
     }
 
     private static CompletableFuture<String> failed(String msg) {
