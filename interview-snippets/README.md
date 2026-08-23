@@ -30,6 +30,7 @@ Compile `--release 8`. Không dùng `var`, `List.of`, `orTimeout`, record.
 | memoize / cache-aside | `computeIfAbsent` | `Memoizer` |
 | stampede / singleflight | 1 load, N waiter share `CompletableFuture` | `SingleflightCache` |
 | async Java 8 | map / flatMap / zip / allOf / timeout / retry | `CfPatterns` |
+| CF exception nhiều stage | lỗi giữa đường có bắt ở cuối không? | `CfExceptionPipeline`, [cf-exception.md](cf-exception.md) |
 | producer-consumer | bounded buffer `wait/notify` | `BoundedBuffer` |
 | rate limit | token bucket + sliding window | `TokenBucket`, `SlidingWindowLimiter` |
 | circuit breaker | CLOSED / OPEN / HALF_OPEN | `CircuitBreaker` |
@@ -57,6 +58,7 @@ Compile `--release 8`. Không dùng `var`, `List.of`, `orTimeout`, record.
 - `computeIfAbsent` giữ lock bin lúc load — loader chậm làm nghẽn. Singleflight nhả lock, waiter `join` future.
 - Java 8 không có `orTimeout`: race với `ScheduledExecutorService` + `applyToEither`.
 - `thenApply` = map; `thenCompose` = flatMap (tránh `CompletableFuture<CompletableFuture<T>>`).
+- Exception CF: `thenApply` sau chỗ lỗi bị skip; `exceptionally`/`handle` cuối **bắt được** nếu chưa cứu giữa đường. Đã cứu giữa đường thì cuối không còn lỗi. `whenComplete` chỉ nhìn, không cứu.
 - Token bucket cho burst; sliding window cứng hơn, đắt hơn về bộ nhớ.
 - Circuit breaker bảo *hệ mình*, rate limit bảo *hệ người khác / chính mình khỏi spam*.
 - Consistent hash: virtual node để key không dồn 1 máy.

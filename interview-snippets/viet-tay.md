@@ -70,6 +70,26 @@ sched.schedule(() -> to.completeExceptionally(new TimeoutException()), n, ms);
 f.applyToEither(to, x -> x);
 ```
 
+### Exception nhiều stage
+
+```java
+// lỗi bếp chảy tới app (pickup/deliver SKIP)
+accept().thenApply(o -> cookBoom())
+        .thenApply(f -> pickup(f))
+        .exceptionally(ex -> "Hoan tien"); // bắt được
+
+// đã đổi món giữa đường → exceptionally cuối KHÔNG chạy
+accept().thenApply(o -> cookBoom())
+        .exceptionally(ex -> "com-tam")
+        .thenApply(f -> pickup(f))         // chạy
+        .exceptionally(ex -> "Hoan tien"); // không chạy
+
+// whenComplete không cứu; thenApply cuối không phải catch
+f.whenComplete((v, ex) -> log(ex));
+f.thenApply(v -> "ok");  // skip nếu fail
+f.join();                // mới ném CompletionException
+```
+
 ## 5. Bounded buffer
 
 ```java
