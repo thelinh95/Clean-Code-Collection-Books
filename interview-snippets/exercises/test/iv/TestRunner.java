@@ -288,11 +288,11 @@ public final class TestRunner {
                 return now.get();
             }
         });
-        isTrue(lim.allow("u"));
-        isTrue(lim.allow("u"));
-        isTrue(!lim.allow("u"));
+        isTrue(lim.allow("u"), "1");
+        isTrue(lim.allow("u"), "2");
+        isTrue(!lim.allow("u"), "full");
         now.set(100);
-        isTrue(lim.allow("u"));
+        isTrue(lim.allow("u"), "slide");
     }
 
     private static void testBreaker() {
