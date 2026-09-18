@@ -29,6 +29,17 @@ Customer 1 ──< SalesOrder 1 ──< OrderLine >── 1 Product
 | `show-sql=false` | Log không phình hơn chính import |
 | `open-in-view=false` | Không giữ session ngoài transaction |
 
+## Cấu hình
+
+Dùng **flat key** (không nest `hibernate.jdbc.batch_size` trong YAML — Spring sẽ không truyền đúng cho Hibernate):
+
+```properties
+spring.jpa.properties.hibernate.jdbc.batch_size=50
+spring.jpa.properties.hibernate.order_inserts=true
+```
+
+Hoặc `HibernatePropertiesCustomizer` trong `HibernateBatchConfig`.
+
 `flush()` **không** `clear()`. `clear()` mới nhả first-level cache.
 
 ## CSV
@@ -63,3 +74,4 @@ Demo ghi CSV 10.000 dòng rồi import vào H2 in-memory.
 - `importdata/ChunkPersister.java` — persist + flush + clear
 - `importdata/CsvRowStream.java` — đọc file lazy
 - `importdata/DemoCsvGenerator.java` — tạo CSV 10k dòng
+- `config/HibernateBatchConfig.java` — bật `hibernate.jdbc.batch_size` (không dùng nested YAML)

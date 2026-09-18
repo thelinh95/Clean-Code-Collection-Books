@@ -18,7 +18,7 @@ import com.example.orderimport.repository.SalesOrderRepository;
 
 import jakarta.persistence.EntityManagerFactory;
 
-@SpringBootTest
+@SpringBootTest(properties = "spring.jpa.properties.hibernate.generate_statistics=true")
 class OrderImportServiceTest {
 
     private static final int LINES = 10_000;
@@ -54,7 +54,12 @@ class OrderImportServiceTest {
         seeder.seed(CUSTOMERS, PRODUCTS);
         Path csv = csvGenerator.write(tempDir.resolve("orders.csv"), LINES, CUSTOMERS, PRODUCTS);
 
-        Statistics stats = entityManagerFactory.unwrap(SessionFactory.class).getStatistics();
+        SessionFactory sessionFactory = entityManagerFactory.unwrap(SessionFactory.class);
+        assertThat(sessionFactory.getSessionFactoryOptions().getJdbcBatchSize())
+                .as("hibernate.jdbc.batch_size must be enabled")
+                .isEqualTo(ChunkPersister.JDBC_BATCH_SIZE);
+
+        Statistics stats = sessionFactory.getStatistics();
         stats.clear();
 
         ImportResult result = importService.importFromCsv(csv);

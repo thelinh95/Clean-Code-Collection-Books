@@ -1,9 +1,0 @@
-import:
-  demo:
-    enabled: true
-
-spring:
-  jpa:
-    properties:
-      hibernate:
-        generate_statistics: true
